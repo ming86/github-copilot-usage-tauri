@@ -9,9 +9,11 @@ use tokio::sync::{oneshot, Mutex};
 
 const GITHUB_DEVICE_CODE_URL: &str = "https://github.com/login/device/code";
 const GITHUB_ACCESS_TOKEN_URL: &str = "https://github.com/login/oauth/access_token";
-// GitHub Copilot client ID
+// GitHub Copilot's OAuth client ID - This is a public client ID used for device code flow
+// It's safe to use because device code flow is designed for native apps that can't keep secrets
 const CLIENT_ID: &str = "Iv1.b507a08c87ecfe98";
 const SCOPES: &str = "read:user";
+pub const AUTH_SERVER_PORT: u16 = 42847;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct DeviceCodeResponse {

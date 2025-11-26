@@ -73,7 +73,7 @@ async fn complete_auth_flow(device_code: String, interval: u64) -> Result<String
     let token = auth::poll_for_token(&device_code, interval).await?;
     
     // Start a local server to display the token
-    let server_url = auth::start_token_server(token.clone(), 42847).await?;
+    let server_url = auth::start_token_server(token.clone(), auth::AUTH_SERVER_PORT).await?;
     
     Ok(server_url)
 }
@@ -81,9 +81,10 @@ async fn complete_auth_flow(device_code: String, interval: u64) -> Result<String
 /// Close the token server
 #[tauri::command]
 async fn close_auth_server() -> Result<(), String> {
-    // Make a request to the close endpoint
+    // Make a request to the close endpoint - ignoring errors is intentional
+    // since the server might not be running or already closed
     let client = reqwest::Client::new();
-    let _ = client.get("http://127.0.0.1:42847/close").send().await;
+    let _ = client.get(format!("http://127.0.0.1:{}/close", auth::AUTH_SERVER_PORT)).send().await;
     Ok(())
 }
 
