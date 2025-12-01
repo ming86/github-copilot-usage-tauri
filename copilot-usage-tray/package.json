@@ -1,6 +1,6 @@
 {
   "name": "copilot-usage-tray",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "GitHub Copilot Usage Tracker - System Tray App",
   "type": "module",
   "scripts": {
